@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
-import { dark } from "@clerk/themes";
+import { dark, neobrutalism } from "@clerk/themes";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
           
 
           {/* footer */}
-          <footer className="bg-muted/50 py-12">
+          <footer className=" py-12 ">
             <div className="container mx-auto px-4 text-center">
               <p>Made with❣️by Gulshan Patel</p>
             </div>
