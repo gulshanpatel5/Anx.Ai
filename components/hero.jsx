@@ -6,6 +6,8 @@ import Image from "next/image";
 
 import ShinyText from "./ShinyText";
 import TextType from "./TextType";
+import { HoverBorderGradient } from "./ui/hover-border-gradient";
+import { TextHoverEffectDemo } from "./TextHover";
 
 
 const HeroSection = () => {
@@ -28,6 +30,7 @@ const HeroSection = () => {
     <section className="w-full pt-36 md:pt-48 pb-10">
       <div className="space-y-6 text-center">
         <div className="space-y-6 mx-auto">
+         {/* <TextHoverEffectDemo/> */}
           <h1 className="text-5xl font-bold md:text-6xl lg:text-7xl xl:text-8xl gradient-title">
             Your AI Career Coach for
             <br />
@@ -61,14 +64,20 @@ const HeroSection = () => {
 
         <div className=" flex justify-center space-x-4">
           <Link href="/dashboard">
-            <Button size="lg" className="px-8">
-              Get Started
-            </Button>
+            <HoverBorderGradient
+        containerClassName="rounded-full"
+        as="button"
+        className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+      > <span>Get started</span>
+      </HoverBorderGradient>
           </Link>
           <Link href="www.youtube.com">
-            <Button size={"lg"} variant="outline" className="px-8">
-              Get started
-            </Button>
+            <HoverBorderGradient
+        containerClassName="rounded-full"
+        as="button"
+        className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+      > <span>Get started</span>
+      </HoverBorderGradient> 
           </Link>
         </div>
         <div className="hero-image-wrapper mt-5 md:mt-0">
