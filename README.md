@@ -40,6 +40,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
     improve icon.
     make footer.
     change background image of the homepage.
+    Currently bio does not work. 
 
 ## Things which i have to learn through this project.
 
