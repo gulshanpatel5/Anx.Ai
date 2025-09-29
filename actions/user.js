@@ -1,6 +1,7 @@
 "use server";
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { success } from "zod";
 
 export async function updateUser(data) {
   const { userId } = await auth();
@@ -17,7 +18,7 @@ export async function updateUser(data) {
         //find the industry is exists
         let industryInsight = await tx.industryInsight.findUnique({
           where: {
-            name: data.industry,
+            industry: data.industry,
           },
         });
         // if industry not exists create a new industry with ai later on ..
@@ -57,7 +58,7 @@ export async function updateUser(data) {
       }
     );
 
-    return result.user;
+    return {success: true, ...result};
   } catch (error) {
     console.error("Error updating user and industry:", error.message);
     throw new Error("Failed to update user  profile");

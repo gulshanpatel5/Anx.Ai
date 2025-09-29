@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { onboardingSchema } from "@/app/lib/schema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Card,
@@ -20,11 +20,30 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { updateUser } from "@/actions/user";
+import useFetch from "@/hooks/use-fetch";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const OnboardingForm = ({ industries }) => {
   const [selectedIndustry, setSelectedIndustry] = useState(null);
   const router = useRouter();
-
+   
+  
+  
+  
+ const { 
+    loading: updateLoading,
+    fn: updateUserFn,
+    data: updateResult,
+ } =   useFetch(updateUser);
+  
+  
+  
+  
   const {
     register,
     handleSubmit,
@@ -35,7 +54,34 @@ const OnboardingForm = ({ industries }) => {
     resolver: zodResolver(onboardingSchema),
   });
 
-  const onSubmit =(values)=> {}
+  const onSubmit = async (values)=> {
+    try{
+
+        const formattedIndustry  = `${values.industry}-${values.subIndustry
+        .toLowerCase()
+        .replace(/ /g, "-")}`;
+        await updateUserFn({
+            ...values,
+            industry: formattedIndustry,
+        })
+
+    }catch (error){
+        console.log("onboarding error", error);
+         
+
+    }
+    
+  }
+
+  useEffect(() => {
+    if (updateResult?.success  && !updateLoading){
+        toast.success("Profile updated successfully");
+        router.push("/dashboard")
+        router.refresh();
+
+        
+    }
+  }, [updateResult, updateLoading]);
 
   const watchIndustry = watch("industry");
 
@@ -44,7 +90,7 @@ const OnboardingForm = ({ industries }) => {
       <Card className="w-full max-w-lg  mt-10 mx-2">
         <CardHeader>
           <CardTitle className="gradient-title text-4xl">
-            complete Your Profile
+            Complete Your Profile
           </CardTitle>
           <CardDescription>
             Select your industry to get personalized career insights and
@@ -64,7 +110,7 @@ const OnboardingForm = ({ industries }) => {
                   setValue("subIndustry", "");
                 }}
               >
-                <SelectTrigger id="Industry">
+                <SelectTrigger id="industry">
                   <SelectValue placeholder="Select an industry" />
                 </SelectTrigger>
                 <SelectContent>
@@ -110,6 +156,77 @@ const OnboardingForm = ({ industries }) => {
                 </p>
               )}
             </div>)}
+
+              <div className="space-y-2">
+              <Label htmlFor="experience">Years of Experience </Label>
+              <Input
+              id= "experience"
+              type="number"
+              min = "0"
+              max= "50"
+              placeholder = "Enter your years of experience"
+              {...register("experience")}
+
+              
+              />
+              
+              {errors.experience && (
+                <p className="text-sm text-red-600">
+                  {errors.experience.message}
+                </p>
+              )}
+            </div>
+
+              <div className="space-y-2">
+              <Label htmlFor="skills">Skills </Label>
+              <Input
+              id= "skills"
+              placeholder = "e.g. JavaScript, Project Management"
+              {...register("skills")}
+
+              
+              />
+              <p className="text-sm text-muted-foreground">Separated multiple skills with commas</p>
+              
+              {errors.skills && (
+                <p className="text-sm text-red-600">
+                  {errors.skills.message}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="bio">Professional Bio</Label>
+              <Textarea
+              id= "bio"
+              placeholder = "Tell us about yourself...."
+              className="h-32"
+              {...register("bio")}
+
+              
+              />
+              <Button type = "submit" className="w-full"  disabled = {updateLoading} >
+              {updateLoading ?  (
+                <>
+                 <Loader2 className="mr-2 h-4 w-4 animate-spin "/>
+                 Saving...
+                 </>
+                 ) :("Save & Continue")
+            
+
+              }
+
+                
+              </Button>
+              
+              
+              {errors.bio && (
+                <p className="text-sm text-red-600">
+                  {errors.bio.message}
+                </p>
+              )}
+            </div>
+
 
           </form>
         </CardContent>

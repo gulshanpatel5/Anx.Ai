@@ -18,7 +18,7 @@ model User {
   id              String    @id @default(uuid())
   clerkUserId     String    @unique// clerk user id help to identify user
   email           String    @unique
-  name            String?
+  name            String 
   imageUrl        String?
   industry        String?   // combined industry-subindustry (e.g.,"tech-software-development")
   industryInsight IndustryInsight? @relation(fields: [industry], references: [industry])
