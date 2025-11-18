@@ -41,6 +41,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
     make footer.
     change background image of the homepage.
     Currently bio does not work. 
+    fixed the (main) components in layout page of (main) Route.
 
 ## Things which i have to learn through this project.
 

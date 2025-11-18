@@ -22,8 +22,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
+  
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { checkUser } from "@/lib/checkUser";
